@@ -5,20 +5,39 @@ def roll_the_dice
 end
 
 def move_player(position)
-    num = dice_roll_result
-    if num == 5 or 6
-	position + 1
+    num = roll_the_dice
+   # puts "position = #{position}"
+    if num > 4
+	position += 1
 	puts "Vous montez d'une marche, vous êtes sur la #{position} marche"
-    else if (num == 1) && (position > 0)
-	position - 1
+    elsif (num == 1) && (position > 0)
+	position -= 1
 	puts "Vous descendez d'une marche, vous êtes sur la #{position} marche"
     else
 	puts "Vous ne bouger pas, vous restez sur la #{position} marche"
     end
+    return position
+end
+
+def average_finish_time
+    stats = Array.new
+    100.times do |i|
+	stats[i] = perform
+    end
+    sum = 0
+    stats.each { |j| sum+=j }
+    return (sum/100)
 end
 
 def perform
-    roll_the_dice
+    position = 0
+    nb_coups = 0
+    while position != 10
+	position = move_player(position)
+	nb_coups += 1
+    end
+    puts "Félicitations!!! Vous êtes arrivés sur la 10e marche en #{nb_coups} coups!"
+    return nb_coups
 end
 
-perform
+puts "Statistiques du jeu: #{average_finish_time} coups par partie."
